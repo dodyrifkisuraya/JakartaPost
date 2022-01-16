@@ -9,7 +9,7 @@ object DataMapper {
             NewsItem(
                 id = it.id,
                 title = it.title,
-                thumbnail = it.gallery?.first()?.pathThumbnail,
+                thumbnail = it.gallery?.first()?.pathOrigin,
                 summary = it.summary,
                 publishedDate = it.publishedDate
             )

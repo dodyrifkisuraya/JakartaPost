@@ -30,6 +30,9 @@ buildscript {
         rxjava_version = "2.2.19"
         rxandroid_version = "2.1.1"
         lifecycle_version = "2.4.0"
+
+        //LOADER IMAGE
+        glide_version = "4.12.0"
     }
     repositories {
         google()

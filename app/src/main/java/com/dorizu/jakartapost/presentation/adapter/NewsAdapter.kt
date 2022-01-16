@@ -5,12 +5,13 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.dorizu.jakartapost.databinding.ListNewsBinding
 import com.dorizu.jakartapost.domain.model.NewsItem
 
 class NewsAdapter : ListAdapter<NewsItem, NewsAdapter.ViewHolder>(DiffCallback) {
 
-    val onItemClick: ((NewsItem) -> Unit)? = null
+    var onItemClick: ((NewsItem) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding = ListNewsBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -28,6 +29,9 @@ class NewsAdapter : ListAdapter<NewsItem, NewsAdapter.ViewHolder>(DiffCallback) 
             binding.apply {
                 tvTitle.text = item.title
                 tvUploadDate.text = item.publishedDate
+                Glide.with(binding.root.context)
+                    .load(item.thumbnail)
+                    .into(thumbnail)
 
                 this.root.setOnClickListener {
                     onItemClick?.invoke(item)

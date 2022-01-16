@@ -1,5 +1,6 @@
 package com.dorizu.jakartapost.presentation
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -9,6 +10,7 @@ import com.dorizu.jakartapost.R
 import com.dorizu.jakartapost.core.data.ResultState
 import com.dorizu.jakartapost.databinding.ActivityMainBinding
 import com.dorizu.jakartapost.domain.model.NewsItem
+import com.dorizu.jakartapost.presentation.DetailNewsActivity.Companion.NEWS_DATA
 import com.dorizu.jakartapost.presentation.adapter.NewsAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -29,6 +31,11 @@ class MainActivity : AppCompatActivity() {
             showListNews(it)
         }
 
+        newsAdapter.onItemClick = { news ->
+            val intent = Intent(this, DetailNewsActivity::class.java)
+            intent.putExtra(NEWS_DATA, news)
+            startActivity(intent)
+        }
         with(binding.rvNews){
             layoutManager = LinearLayoutManager(context)
             adapter = newsAdapter
