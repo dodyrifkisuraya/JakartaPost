@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">JakartaPost</string>
+    <string name="imageview_desc">ImageView</string>
+    <string name="dummy_title">Android Jetpack Paging 3 and Flow</string>
+    <string name="dummy_date">12 January 2022</string>
+    <string name="dummy_content">Today you gonna learn how to implement Pagination by using paging 3 from the android jetpack libraries. For my surprise the codelab of Paging 3 was one of the most easiest I have ever done. Florina Muntenescu did a great job with each step of the codelab, go check it out and give it a try.</string>
 </resources>
