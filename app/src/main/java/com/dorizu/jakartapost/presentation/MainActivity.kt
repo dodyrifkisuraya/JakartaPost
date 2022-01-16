@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.dorizu.jakartapost.R
 import com.dorizu.jakartapost.core.data.ResultState
 import com.dorizu.jakartapost.databinding.ActivityMainBinding
@@ -15,7 +16,7 @@ import com.dorizu.jakartapost.presentation.adapter.NewsAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), SwipeRefreshLayout.OnRefreshListener {
 
     private lateinit var binding: ActivityMainBinding
     private val mainViewModel: MainViewModel by viewModels()
@@ -30,6 +31,7 @@ class MainActivity : AppCompatActivity() {
         mainViewModel.listNews.observe(this){
             showListNews(it)
         }
+        binding.swipeHome.setOnRefreshListener(this)
 
         newsAdapter.onItemClick = { news ->
             val intent = Intent(this, DetailNewsActivity::class.java)
@@ -43,10 +45,21 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun showListNews(it: ResultState<List<NewsItem>>?) {
-        when(it){
-            is ResultState.Success -> {
-                newsAdapter.submitList(it.data)
+        binding.apply {
+            when(it){
+                is ResultState.Success -> {
+                    swipeHome.isRefreshing = false
+                    newsAdapter.submitList(it.data)
+                }
+                is ResultState.Loading -> {
+                    swipeHome.isRefreshing = true
+                }
+                else -> swipeHome.isRefreshing = false
             }
         }
+    }
+
+    override fun onRefresh() {
+        mainViewModel.getListNews()
     }
 }
